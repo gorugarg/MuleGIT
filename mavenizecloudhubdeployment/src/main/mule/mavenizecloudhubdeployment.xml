@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="a51d655b-db02-4022-9213-97a2720dd1b0" >
+		<http:listener-connection host="0.0.0.0" port="${http.port}" />
+	</http:listener-config>
+	<api-gateway:autodiscovery apiId="${api.id}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="ea17fd8a-9633-4f4b-b0df-590a29d7a014" flowRef="mavenizecloudhubdeploymentFlow" />
+	<configuration-properties doc:name="Configuration properties" doc:id="3ea5bc58-09f3-40e1-a18c-184324817058" file="${env}.yaml" />
+	<flow name="mavenizecloudhubdeploymentFlow" doc:id="1b7071a9-852b-4d33-a17e-35be7d0a28be" >
+		<http:listener doc:name="Listener" doc:id="1fe6aeec-91be-4417-8e65-33607bc29647" config-ref="HTTP_Listener_config" path="/mavenize"/>
+		<logger level="INFO" doc:name="Logger" doc:id="43ca94b9-495a-434b-b43f-5544ecc62f56" message="'logs are adding hurrayyyyyy'"/>
+	</flow>
+</mule>

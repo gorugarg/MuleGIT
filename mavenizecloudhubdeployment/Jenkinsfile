@@ -1,17 +1,28 @@
 pipeline {
 
   agent any
+  environment {
+    //adding a comment for the commit test
+    ANYPOINT_CREDS = credentials('ANYPOINT_CREDENTIALS')
+
+  }
   
   stages {
     stage('Build') {
       steps {
-            bat 'mvn -B -U -e -V -f mavenizecloudhubdeployment/pom.xml clean -DskipTests package'
+            bat 'mvn -B -U -e -V clean -DskipTests package'
       }
     }
 
      stage('Deployment') {
+	 environment {
+    //adding a comment for the commit test
+    CLIENT_ID = credentials('DEV_CLIENT_ID')
+	CLIENT_SECRET=credentials('DEV_CLIENT_SECRET')
+
+	}
       steps {
-           bat 'mvn -f mavenizecloudhubdeployment/pom.xml clean package -Pdev deploy -DmuleDeploy'
+           bat 'mvn clean package -Pdev deploy -DmuleDeploy  -Dusername="%ANYPOINT_CREDS_USR%" -Dpassword="%ANYPOINT_CREDS_PSW%" -Danypoint.platform.client_id="%CLIENT_ID%" -Danypoint.platform.client_secret="%CLIENT_SECRET%"
       }
     }
     

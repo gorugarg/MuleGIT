@@ -5,13 +5,13 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-            bat 'mvn -B -U -e -V clean -DskipTests package'
+            bat 'mvn -B -U -e -V -f mavenizecloudhubdeployment/pom.xml clean -DskipTests package'
       }
     }
 
      stage('Deployment') {
       steps {
-           bat 'mvn clean package -Pdev deploy -DmuleDeploy'
+           bat 'mvn -f mavenizecloudhubdeployment/pom.xml clean package -Pdev deploy -DmuleDeploy'
       }
     }
     

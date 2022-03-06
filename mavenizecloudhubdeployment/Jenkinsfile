@@ -10,7 +10,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-            bat 'mvn -B -U -e -V clean -DskipTests package'
+            bat 'mvn -B -U -e -V  -f mavenizecloudhubdeployment/pom.xml clean -DskipTests package'
       }
     }
 
@@ -22,7 +22,7 @@ pipeline {
 
 	}
       steps {
-           bat 'mvn clean package -Pdev deploy -DmuleDeploy  -Dusername="%ANYPOINT_CREDS_USR%" -Dpassword="%ANYPOINT_CREDS_PSW%" -Danypoint.platform.client_id="%CLIENT_ID%" -Danypoint.platform.client_secret="%CLIENT_SECRET%"'
+           bat 'mvn clean package  -f mavenizecloudhubdeployment/pom.xml  -Pdev deploy -DmuleDeploy  -Dusername="%ANYPOINT_CREDS_USR%" -Dpassword="%ANYPOINT_CREDS_PSW%" -Danypoint.platform.client_id="%CLIENT_ID%" -Danypoint.platform.client_secret="%CLIENT_SECRET%"'
       }
     }
     
